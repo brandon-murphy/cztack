@@ -7,7 +7,7 @@ locals {
     managedBy = "terraform"
   }
 
-  domain       = replace(data.aws_route53_zone.zone.name, "/\\.$/", "")
+  domain       = data.aws_route53_zone.zone.name
   website_fqdn = "${var.subdomain}.${local.domain}"
   bucket_name  = var.bucket_name != "" ? var.bucket_name : local.website_fqdn
 

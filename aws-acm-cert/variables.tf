@@ -18,40 +18,8 @@ variable "validation_record_ttl" {
   default = 60
 }
 
-variable "project" {
-  type        = string
-  description = "Project for tagging and naming. See [doc](../README.md#consistent-tagging)"
-}
-
-variable "env" {
-  type        = string
-  description = "Env for tagging and naming. See [doc](../README.md#consistent-tagging)."
-}
-
-variable "service" {
-  type        = string
-  description = "Service for tagging and naming. See [doc](../README.md#consistent-tagging)."
-}
-
-variable "owner" {
-  type        = string
-  description = "Owner for tagging and naming. See [doc](../README.md#consistent-tagging)."
-}
-
-variable "allow_validation_record_overwrite" {
-  type        = string
-  description = "Allow the overwrite of validation records. This is needed if you are creating certificates in multiple regions."
-  default     = true
-}
-
-variable "subject_alternative_names_order" {
-  type        = list(string)
-  description = "Order to list the subject alternative names in the ACM cert. Workaround for https://github.com/terraform-providers/terraform-provider-aws/issues/8531"
-  default     = null
-}
-
-variable "cert_subject_alternative_names_count" {
-  type        = number
-  description = "The size of var.cert_subject_alternative_names. Since var.cert_subject_alternative_names can have dynamic keys/values we must hint terraform on its size. If you have no SANs then this should be 0."
-  default     = 0
+variable tags {
+  type        = map(string)
+  description = "Tags to apply to certificate"
+  default     = {}
 }

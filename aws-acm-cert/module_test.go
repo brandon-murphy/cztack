@@ -41,19 +41,22 @@ func TestAWSACMCertDefaults(t *testing.T) {
 				alternativeDomainName: route53ZoneID,
 			}
 
+			tags := map[string]string{
+				"project":   project,
+				"env":       env,
+				"service":   service,
+				"owner":     owner,
+				"managedBy": "terraform",
+			}
+
 			return testutil.Options(
 				testutil.DefaultRegion,
 				map[string]interface{}{
-					"project": project,
-					"env":     env,
-					"service": service,
-					"owner":   owner,
-
-					"cert_domain_name":                     certDomainName,
-					"aws_route53_zone_id":                  route53ZoneID,
-					"validation_record_ttl":                5,
-					"cert_subject_alternative_names":       alternativeNames,
-					"cert_subject_alternative_names_count": len(alternativeNames),
+					"cert_domain_name":               certDomainName,
+					"aws_route53_zone_id":            route53ZoneID,
+					"validation_record_ttl":          5,
+					"cert_subject_alternative_names": alternativeNames,
+					"tags":                           tags,
 				},
 			)
 		},

@@ -4,7 +4,7 @@
 
 ```hcl
 module lambda {
-  source = "github.com/chanzuckerberg/cztack/aws-lambda-function?ref=v0.14.0"
+  source = "github.com/chanzuckerberg/cztack/aws-lambda-function?ref=tf-aws-3.0"
 
   filename         = "file.zip"
   handler          = "handle"
@@ -24,13 +24,13 @@ module lambda {
 
 | Name | Version |
 |------|---------|
-| aws | < 3.0.0 |
+| aws | >= 3.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | < 3.0.0 |
+| aws | >= 3.0.0 |
 
 ## Inputs
 

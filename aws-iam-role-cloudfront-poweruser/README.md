@@ -5,15 +5,13 @@ This module will create a role which is granted poweruser control over AWS Cloud
 <!-- START -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| aws | < 3.0.0 |
+No requirements.
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | < 3.0.0 |
+| aws | n/a |
 
 ## Inputs
 

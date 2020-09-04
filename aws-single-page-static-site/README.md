@@ -42,13 +42,13 @@ module "site" {
 
 | Name | Version |
 |------|---------|
-| aws | < 3.0.0 |
+| aws | >= 3.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | < 3.0.0 |
+| aws | >= 3.0.0 |
 
 ## Inputs
 

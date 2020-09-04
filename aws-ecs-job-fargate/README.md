@@ -25,15 +25,13 @@ Since changing a service to use the new ARN requires destroying and recreating t
 <!-- START -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| aws | < 3.0.0 |
+No requirements.
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | < 3.0.0 |
+| aws | n/a |
 
 ## Inputs
 

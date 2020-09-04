@@ -96,15 +96,13 @@ You can read more about Bless and SSH certificates here:
 <!-- START -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| aws | < 3.0.0 |
+No requirements.
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | < 3.0.0 |
+| aws | n/a |
 | bless | n/a |
 | random | n/a |
 

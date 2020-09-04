@@ -29,15 +29,13 @@ module "s3-bucket" {
 <!-- START -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| aws | < 3.0.0 |
+No requirements.
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | < 3.0.0 |
+| aws | n/a |
 
 ## Inputs
 

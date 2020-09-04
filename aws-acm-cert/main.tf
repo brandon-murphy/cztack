@@ -1,40 +1,33 @@
-locals {
-  tags = {
-    project   = var.project
-    env       = var.env
-    service   = var.service
-    owner     = var.owner
-    managedBy = "terraform"
-  }
-
-  cert_validation_count = var.cert_subject_alternative_names_count + 1
-}
-
 resource "aws_acm_certificate" "cert" {
   domain_name               = var.cert_domain_name
-  subject_alternative_names = var.subject_alternative_names_order == null ? keys(var.cert_subject_alternative_names) : var.subject_alternative_names_order
+  subject_alternative_names = keys(var.cert_subject_alternative_names)
   validation_method         = "DNS"
-  tags                      = local.tags
+  tags                      = var.tags
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
-# https://www.terraform.io/docs/providers/aws/r/acm_certificate_validation.html
 resource "aws_route53_record" "cert_validation" {
-  count = local.cert_validation_count
+  for_each = {
+    for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
 
-  name    = lookup(aws_acm_certificate.cert.domain_validation_options[count.index], "resource_record_name")
-  type    = lookup(aws_acm_certificate.cert.domain_validation_options[count.index], "resource_record_type")
-  zone_id = lookup(var.cert_subject_alternative_names, lookup(aws_acm_certificate.cert.domain_validation_options[count.index], "domain_name"), var.aws_route53_zone_id)
-  records = ["${lookup(aws_acm_certificate.cert.domain_validation_options[count.index], "resource_record_value")}"]
+  name    = each.value.name
+  type    = each.value.type
+  zone_id = lookup(var.cert_subject_alternative_names, each.key, var.aws_route53_zone_id)
+  records = [each.value.record]
   ttl     = var.validation_record_ttl
 
-  allow_overwrite = var.allow_validation_record_overwrite
+  allow_overwrite = true  # Needed if making cert in multiple regions, and for AWS Provider 3.0 conversion
 }
 
 resource "aws_acm_certificate_validation" "cert" {
   certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = aws_route53_record.cert_validation.*.fqdn
+  validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
